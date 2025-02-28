@@ -1,0 +1,30 @@
+{
+  "name": "joynet_backend",
+  "version": "1.0.0",
+  "description": "Social media network JoyNet",
+  "homepage": "https://github.com/DAOROBOT/JoyNet#readme",
+  "bugs": {
+    "url": "https://github.com/DAOROBOT/JoyNet/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DAOROBOT/JoyNet.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "src/main.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "tsc -b && node dist/main.js"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.11.0"
+  }
+}
