@@ -10,7 +10,7 @@ class AppError extends Error {
     }
 }
 
-const success_handler = (res: Response, data: any, status_code: number = 200) => {
+const success_handler = (res: Response, status_code: number = 200, data: any) => {
     res.status(status_code).json({
         success: true,
         status_code,
