@@ -1,8 +1,10 @@
 require("dotenv").config()
 import express, {Express, Request, Response, NextFunction} from "express";
-import {PostRoute} from "./route/post.route";
 import {ErrorHandler} from "./middleware/error_handler.middleware"
 import {connect} from "mongoose";
+import {AppError} from "./app_response";
+import {AuthRouter} from "./route/auth.route";
+import {PostRouter} from "./route/post.route";
 
 if (process.env.MONGO_DB_URI === undefined) {
     console.log("Error: Missing MONGO_DB_URI in .env")
@@ -18,7 +20,13 @@ const app: Express = express();
 
 
 
-app.use("/post", PostRoute);
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use("/auth", AuthRouter);
+app.use("/post", PostRouter);
+app.use((req: Request, res: Response, next: NextFunction) => {
+    next(new AppError(404, "Not found"));
+});
 app.use(ErrorHandler);
 
 

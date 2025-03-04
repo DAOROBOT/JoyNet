@@ -1,3 +1,4 @@
+import {Schema, model, Types} from "mongoose";
 interface IReport {
     denouncer: Types.ObjectId, // reference User
     post: Types.ObjectId, // reference Post

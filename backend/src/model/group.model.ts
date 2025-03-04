@@ -1,3 +1,6 @@
+import {Schema, model, Types} from "mongoose";
+
+const GroupDocument = "Group";
 interface IGroup {
     name: string,
     description: string,
@@ -6,5 +9,7 @@ interface IGroup {
     admin: Types.ObjectId, // reference User
 
     members: Array<Types.ObjectId>, // reference User
-    created_date: number?, // unix time in seconds
+    created_date?: number, // unix time in seconds
 }
+
+export {GroupDocument}
