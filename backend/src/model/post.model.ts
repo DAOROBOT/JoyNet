@@ -1,4 +1,13 @@
-import {Schema, model, Types} from "mongoose";
+import { Schema, model, Types } from "mongoose";
+import { GroupDocument } from "./group.model"
+import { UserDocument } from "./user.model"
+
+enum safety {
+    User = "User",
+    Admin = "Admin"
+}
+
+const PostDocument = "Post";
 
 interface IPost {
     content: string;
@@ -12,16 +21,28 @@ interface IPost {
     uploader: Types.ObjectId; // NOTE: reference to User
     group?: Types.ObjectId;
 
-    created_date: number; // unix timestamp in seconds
-
     likes: Array<Types.ObjectId>;
     shares: Array<Types.ObjectId>;
     comments: Array<Types.ObjectId>;
 }
 
 const post_schema = new Schema<IPost>({
-})
+    content: { type: String, required: true },
+    image: { type: String },
+    video: { type: String },
+    embedded_link: { type: String },
+
+    censor: { type: String, enum: safety, required: true },
+
+    reply_to: { type: Schema.Types.ObjectId, ref: UserDocument },
+    uploader: { type: Schema.Types.ObjectId, ref: UserDocument, required: true },
+    group: { type: Schema.Types.ObjectId, ref: GroupDocument },
+
+    likes: [{ type: Schema.Types.ObjectId, ref: UserDocument }],
+    shares: [{ type: Schema.Types.ObjectId, ref: UserDocument }],
+    comments: [{ type: Schema.Types.ObjectId, ref: PostDocument }],
+}, { _id: true, timestamps: true });
 
 const PostModel = model<IPost>("Post", post_schema);
 
-export {PostModel};
+export { PostModel };
