@@ -26,10 +26,10 @@ const AuthController = {
         const token = jwt.sign(
             { userId: user._id, email: user.email },
             process.env.JWT_SECRET as string,
-            { expiresIn: '1h' }
+            { expiresIn: '24h' }
         );
 
-        success_handler(res, 200, { token, user: { id: user._id, email: user.email }, expiresIn: { in: '1h' } });
+        success_handler(res, 200, { token, user: { id: user._id, email: user.email }, expiresIn: Date.now() + 24 * 3600 * 1000 });
         // res.redirect();
     },
 

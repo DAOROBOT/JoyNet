@@ -3,8 +3,8 @@ import { GroupDocument } from "./group.model"
 import { UserDocument } from "./user.model"
 
 enum safety {
-    User = "User",
-    Admin = "Admin"
+    safe = "Safe",
+    Unsafe = "Unsafe"
 }
 
 const PostDocument = "Post";
@@ -34,7 +34,7 @@ const post_schema = new Schema<IPost>({
 
     censor: { type: String, enum: safety, required: true },
 
-    reply_to: { type: Schema.Types.ObjectId, ref: UserDocument },
+    reply_to: { type: Schema.Types.ObjectId, ref: PostDocument },
     uploader: { type: Schema.Types.ObjectId, ref: UserDocument, required: true },
     group: { type: Schema.Types.ObjectId, ref: GroupDocument },
 
@@ -45,4 +45,4 @@ const post_schema = new Schema<IPost>({
 
 const PostModel = model<IPost>("Post", post_schema);
 
-export { PostModel };
+export { PostModel, PostDocument, safety };
