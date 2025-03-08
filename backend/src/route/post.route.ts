@@ -4,6 +4,7 @@ const PostRouter = Router();
 
 PostRouter.get("/", PostController.get_post);
 PostRouter.post("/create", PostController.create_post);
-
+PostRouter.post("/reply", PostController.create_post);
+PostRouter.delete("/delete", PostController.delete_post);
 
 export { PostRouter };
