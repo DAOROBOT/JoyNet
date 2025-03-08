@@ -1,6 +1,5 @@
 import { Schema, model, Types } from "mongoose";
-import { UserDocument } from "./user.model"
-import { PostDocument } from "./post.model"
+import { PostDocument, UserDocument, ReportDocument } from "./document"
 
 interface IReport {
     denouncer: Types.ObjectId, // reference User
@@ -16,6 +15,6 @@ const Report_schema = new Schema<IReport>({
     approved: { type: Boolean, default: false },
 }, { _id: true, timestamps: true });
 
-const ReportModel = model<IReport>("Report", Report_schema);
+const ReportModel = model<IReport>(ReportDocument, Report_schema);
 
 export { ReportModel };

@@ -1,7 +1,5 @@
 import { Schema, model, Types } from "mongoose";
-import { UserDocument } from "./user.model"
-
-const GroupDocument = "Group";
+import { UserDocument, GroupDocument } from "./document"
 
 enum Visibility {
     Public = "Public",
@@ -28,6 +26,6 @@ const Group_schema = new Schema<IGroup>({
     members: [{ type: Schema.Types.ObjectId, ref: UserDocument }],
 }, { _id: true, timestamps: true });
 
-const GroupModel = model<IGroup>("Group", Group_schema);
+const GroupModel = model<IGroup>(GroupDocument, Group_schema);
 
-export { GroupModel, GroupDocument, Visibility };
+export { GroupModel, Visibility };

@@ -1,5 +1,5 @@
 import { Schema, model, Types } from "mongoose";
-import { UserDocument } from "./user.model"
+import { UserDocument, AnnouncementDocument } from "./document"
 
 interface IAnnouncement {
     content: string,
@@ -11,6 +11,6 @@ const Announcement_schema = new Schema<IAnnouncement>({
     receiver: { type: Schema.Types.ObjectId, ref: UserDocument },
 }, { _id: true, timestamps: true });
 
-const AnnouncementModel = model<IAnnouncement>("Announcement", Announcement_schema);
+const AnnouncementModel = model<IAnnouncement>(AnnouncementDocument, Announcement_schema);
 
 export { AnnouncementModel };

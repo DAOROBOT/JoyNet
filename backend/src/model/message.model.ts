@@ -1,5 +1,5 @@
 import { Schema, model, Types } from "mongoose";
-import { UserDocument } from "./user.model"
+import { UserDocument, MessageDocument } from "./document"
 
 enum Receiver {
     Group = "Group",
@@ -27,6 +27,6 @@ const Message_schema = new Schema<IMessage>({
     receiver: { type: Schema.Types.ObjectId, required: true, refPath: "type" },
 }, { _id: true, timestamps: true });
 
-const MessageModel = model<IMessage>("Message", Message_schema);
+const MessageModel = model<IMessage>(MessageDocument, Message_schema);
 
 export { MessageModel };
