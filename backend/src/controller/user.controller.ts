@@ -6,6 +6,9 @@ const UserController = {
     async get_user(req: Request, res: Response, next: NextFunction) {
         next(new AppError(404, "Not implememented"));
     },
+    async setting_user(req: Request, res: Response, next: NextFunction) {
+        next(new AppError(404, "Not implememented"));
+    },
 }
 
 export { UserController }
