@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import logo from "../../assets/logo.png";
 import { AuthApi } from "../../api/auth"
+import {AuthContext} from "../../context";
 import {
     Button,
     Typography,
@@ -10,8 +11,8 @@ import {
     Box,
 } from "@mui/material";
 export default function LoginPage() {
-    const EMAIL_INPUT_NAME = "email"
-    const PASSWORD_INPUT_NAME = "password"
+    const EMAIL_INPUT_ID = "email"
+    const PASSWORD_INPUT_ID = "password"
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -24,11 +25,19 @@ export default function LoginPage() {
 
         setIsLoading(true);
 
-        const email = document.getElementById(EMAIL_INPUT_NAME).value;
-        const password = document.getElementById(PASSWORD_INPUT_NAME).value;
+        const email = document.getElementById(EMAIL_INPUT_ID).value;
+        const password = document.getElementById(PASSWORD_INPUT_ID).value;
         try {
             const response = await AuthApi.login(email, password);
             setIsLoading(false);
+            if (response.success) {
+                const {token, user: {email, userId: id}, expiresIn} = response.data;
+                AuthContext.setContext({token, email, id, expiresIn});
+                navigate("/home");
+            } else {
+                // TODO: handle error better
+                alert(response.data);
+            }
             console.log(response);
         } catch (err) {
             console.log(err);
@@ -55,7 +64,7 @@ export default function LoginPage() {
                         <TextField
                           required
                           error={!isEmailValid}
-                          id={EMAIL_INPUT_NAME}
+                          id={EMAIL_INPUT_ID}
                           label="Email"
                           onChange={onEmailChange}
                         />
@@ -63,7 +72,7 @@ export default function LoginPage() {
                     <div>
                         <TextField
                           required
-                          id={PASSWORD_INPUT_NAME}
+                          id={PASSWORD_INPUT_ID}
                           label="Password"
                           type="password"
                         />

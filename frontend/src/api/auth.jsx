@@ -1,17 +1,10 @@
+import {postApi} from "./helper";
 const AuthApi = {
     async login(email, password) {
-        // TODO: call api from backend
-        return {
-            success: true,
-            status_code: 200,
-            data: {
-                api_key: "",
-                expire: ""
-            }
-        };
+        return await postApi("auth/login", JSON.stringify({email, password}), false);
     },
     async register(email, password) {
-        // TODO: call api from backend
+        return await postApi("auth/register", JSON.stringify({email, password}), false);
     },
 };
 

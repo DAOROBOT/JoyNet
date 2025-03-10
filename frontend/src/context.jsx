@@ -3,19 +3,33 @@ const AuthContext = {
         return AuthContext.getToken() !== null;
     },
 
-    // return null or string
-    getToken: () => {
+    getContext: () => {
         const authContextRaw = localStorage.getItem("authContext");
         if (authContextRaw === undefined || authContextRaw === null) return null;
 
-        const authContext = JSON.parse(authContext);
+        const authContext = JSON.parse(authContextRaw);
         if (Date.now() >= Number(authContext.expiresIn || Number.POSITIVE_INFINITY)) return null;
-        return authContext.token;
+        return authContext;
     },
 
-    setToken: (token, expiresIn) => {
+    // return null or string
+    getToken: () => {
+        return AuthContext.getContext()?.token;
+    },
+
+    getId: () => {
+        return AuthContext.getContext()?.id;
+    },
+
+    getEmail: () => {
+        return AuthContext.getContext()?.email;
+    },
+
+    setContext: ({token, email, id, expiresIn}) => {
         localStorage.setItem("authContext", JSON.stringify({
             token,
+            email,
+            id,
             expiresIn
         }));
     }
