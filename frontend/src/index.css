@@ -2,3 +2,25 @@
     box-sizing: border-box;
 }
 @import "tailwindcss";
+@layer utilities {
+    .custom-scrollbar::-webkit-scrollbar {
+        width: theme('width.2');
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        margin-top: theme('spacing.2');
+        margin-bottom: theme('spacing.2');
+        background: theme('colors.gray.300');
+        border-radius: theme('borderRadius.1');
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: theme('colors.gray.500');
+        border-radius: theme('borderRadius.1');
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: theme('colors.gray.600');
+        border-radius: theme('borderRadius.1');
+    }
+}
