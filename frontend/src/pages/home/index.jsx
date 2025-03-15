@@ -1,7 +1,38 @@
-import React from "react";
-import { FaHome, FaHashtag, FaBell, FaEnvelope, FaBookmark, FaList, FaUser, FaEllipsisH, FaFeatherAlt } from "react-icons/fa";
+import React, { useState } from "react";
+import "./index.css";
+import {
+  FaHome,
+  FaHashtag,
+  FaBell,
+  FaEnvelope,
+  FaBookmark,
+  FaList,
+  FaUser,
+  FaEllipsisH,
+  FaFeatherAlt,
+} from "react-icons/fa";
 
 const Home = () => {
+  const [tweets, setTweets] = useState([
+    { user: "Elon Musk", text: "Excited about the future of AI!" },
+    { user: "Đặng Vĩnh Tường", text: "Tech supporter cho Đạo :))" },
+    { user: "Đạo", text: "Cảm ơn Tường" },
+  ]);
+
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const addTweet = (newTweet) => {
+    setTweets([newTweet, ...tweets]);
+  };
+
+  const openImage = (image) => {
+    setSelectedImage(image);
+  };
+
+  const closeImage = () => {
+    setSelectedImage(null);
+  };
+
   return (
     <div className="flex min-h-screen bg-black text-white">
       {/* Sidebar */}
@@ -25,8 +56,12 @@ const Home = () => {
       {/* Main Content */}
       <div className="w-3/5 border-r border-gray-700">
         <div className="p-4 border-b border-gray-700 text-xl font-bold">Home</div>
-        <TweetBox />
-        <Feed />
+        <TweetBox addTweet={addTweet} />
+        <div className="tweetsContainer overflow-y-auto max-h-[500px] p-4">
+          {tweets.map((tweet, index) => (
+            <Tweet key={index} {...tweet} openImage={openImage} />
+          ))}
+        </div>
       </div>
 
       {/* Right Sidebar */}
@@ -38,6 +73,19 @@ const Home = () => {
           <TrendingItem topic="Tech News" tweets="75K" />
         </div>
       </div>
+
+      {/* Hiển thị ảnh khi click vào */}
+      {selectedImage && (
+        <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-80 flex justify-center items-center z-50">
+          <button
+            className="absolute top-4 right-6 bg-gray-800 hover:bg-gray-600 text-white font-bold py-1 px-3 rounded-full text-lg"
+            onClick={closeImage}
+          >
+            ✕
+          </button>
+          <img src={selectedImage} alt="Selected" className="max-w-[80vw] max-h-[80vh] rounded-lg shadow-lg" />
+        </div>
+      )}
     </div>
   );
 };
@@ -49,25 +97,59 @@ const NavItem = ({ icon, text }) => (
   </div>
 );
 
-const TweetBox = () => (
-  <div className="border-b border-gray-700 p-4">
-    <textarea className="w-full bg-black text-white p-3 rounded-lg border border-gray-700" placeholder="What's happening?"></textarea>
-    <button className="mt-3 bg-blue-500 px-4 py-2 rounded-full font-bold">Post</button>
-  </div>
-);
+const TweetBox = ({ addTweet }) => {
+  const [tweetText, setTweetText] = useState("");
+  const [image, setImage] = useState(null);
 
-const Feed = () => (
-  <div>
-    <Tweet user="Elon Musk" text="Excited about the future of AI!" />
-    <Tweet user="React Dev" text="React 19 is going to be amazing!" />
-    <Tweet user="Tech Guru" text="Technology is evolving faster than ever!" />
-  </div>
-);
+  const handleTweet = () => {
+    if (tweetText || image) {
+      addTweet({ user: "You", text: tweetText, image });
+      setTweetText("");
+      setImage(null);
+    }
+  };
 
-const Tweet = ({ user, text }) => (
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      setImage(URL.createObjectURL(file));
+    } else {
+      alert("Please select a valid image file.");
+    }
+  };
+
+  return (
+    <div className="border-b border-gray-700 p-4">
+      <textarea
+        className="w-full bg-black text-white p-3 rounded-lg border border-gray-700"
+        placeholder="What's happening?"
+        value={tweetText}
+        onChange={(e) => setTweetText(e.target.value)}
+      ></textarea>
+      <input type="file" accept="image/*" className="mt-2 text-white" onChange={handleFileChange} />
+      {image && (
+        <div className="relative mt-2">
+          <img src={image} alt="Preview" className="max-w-[150px] rounded-lg" />
+          <button
+            className="absolute top-0 right-0 bg-black text-white p-1 rounded-full"
+            onClick={() => setImage(null)}
+          >
+            ✖
+          </button>
+        </div>
+      )}
+      <button className="mt-3 bg-blue-500 px-4 py-2 rounded-full font-bold" onClick={handleTweet}>Post</button>
+    </div>
+  );
+};
+
+const Tweet = ({ user, text, image, openImage }) => (
   <div className="border-b border-gray-700 p-4">
     <div className="font-bold">{user}</div>
     <div>{text}</div>
+    {image && (
+      <img src={image} alt="Tweet" className="mt-2 rounded-lg max-w-[200px] cursor-pointer" onClick={() => openImage(image)} />
+    )}
   </div>
 );
 
