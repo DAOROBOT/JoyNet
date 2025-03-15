@@ -5,7 +5,7 @@ import HomePage from  "./../pages/home";
 import NotFoundPage from  "./../pages/notfound";
 import ProtectedRoute from "./ProtectedRoute";
 export default function Router() {
-    const protectedRoutes = (element) => (<ProtectedRoute> {element} </ProtectedRoute>);
+    const protectedRoutes = (element) => element;
 
     const homeRoutes = ['/', '/home'].map(path => ({path, element: protectedRoutes(<HomePage/>)}))
     const Routes = () => useRoutes(

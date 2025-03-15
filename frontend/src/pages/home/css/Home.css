@@ -1,11 +1,8 @@
-.container {
-    display: flex;
-    justify-content: start;
-    flex-direction: horizontal;
-    height: 100vh;
-    width: 100vw;
-}
-.container .child {
-    flex: 1;
-    height: 100%;
+.home {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #000;
+  color: white;
 }

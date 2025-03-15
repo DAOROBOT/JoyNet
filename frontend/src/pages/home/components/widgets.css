@@ -1,0 +1,22 @@
+.widgets {
+  width: 300px;
+  background: #15202b;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.trending-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.trending-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #1d2c3b;
+  font-size: 18px;
+}
+
+.trending-list span {
+  color: #888;
+  font-size: 14px;
+}
