@@ -8,19 +8,19 @@
     }
 
     .custom-scrollbar::-webkit-scrollbar-track {
-        margin-top: theme('spacing.2');
-        margin-bottom: theme('spacing.2');
-        background: theme('colors.gray.300');
-        border-radius: theme('borderRadius.1');
+        margin-top: var(m-2);
+        margin-bottom: var(m-2);
+        background: var(gray-300);
+        border-radius: var(rounded-sm);
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: theme('colors.gray.500');
-        border-radius: theme('borderRadius.1');
+        background: var(gray-500);
+        border-radius: var(rounded-sm);
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: theme('colors.gray.600');
-        border-radius: theme('borderRadius.1');
+        background: var(gray-600);
+        border-radius: var(rounded-sm);
     }
 }

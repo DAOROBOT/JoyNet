@@ -1,10 +1,13 @@
+const storageKey = "authContext";
 const AuthContext = {
     isLogin: () => {
-        return AuthContext.getToken() !== null;
+        const context = AuthContext.getContext();
+        if (context === null) return false;
+        return context.expiresIn > Date.now();
     },
 
     getContext: () => {
-        const authContextRaw = localStorage.getItem("authContext");
+        const authContextRaw = localStorage.getItem(storageKey);
         if (authContextRaw === undefined || authContextRaw === null) return null;
 
         const authContext = JSON.parse(authContextRaw);
@@ -14,19 +17,25 @@ const AuthContext = {
 
     // return null or string
     getToken: () => {
-        return AuthContext.getContext()?.token;
+        const token = AuthContext.getContext()?.token;
+        if (token === undefined) return null;
+        return token;
     },
 
     getId: () => {
-        return AuthContext.getContext()?.id;
+        const id = AuthContext.getContext()?.id;
+        if (id === undefined) return null;
+        return id;
     },
 
     getEmail: () => {
-        return AuthContext.getContext()?.email;
+        const email = AuthContext.getContext()?.email;
+        if (email === undefined) return null;
+        return email;
     },
 
     setContext: ({token, email, id, expiresIn}) => {
-        localStorage.setItem("authContext", JSON.stringify({
+        localStorage.setItem(storageKey, JSON.stringify({
             token,
             email,
             id,
