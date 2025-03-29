@@ -1,13 +1,10 @@
 import { Schema, model, Types } from "mongoose";
-import { GroupDocument } from "./group.model"
-import { UserDocument } from "./user.model"
+import { UserDocument, GroupDocument, PostDocument } from "./document"
 
 enum safety {
     safe = "Safe",
     Unsafe = "Unsafe"
 }
-
-const PostDocument = "Post";
 
 interface IPost {
     content: string;
@@ -43,6 +40,6 @@ const post_schema = new Schema<IPost>({
     comments: [{ type: Schema.Types.ObjectId, ref: PostDocument }],
 }, { _id: true, timestamps: true });
 
-const PostModel = model<IPost>("Post", post_schema);
+const PostModel = model<IPost>(PostDocument, post_schema);
 
 export { PostModel, PostDocument, safety };

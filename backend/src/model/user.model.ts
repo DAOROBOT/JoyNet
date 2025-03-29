@@ -1,5 +1,5 @@
-import {Schema, model, Types} from "mongoose";
-import {GroupDocument} from "./group.model"
+import { Schema, model, Types } from "mongoose";
+import { GroupDocument, UserDocument } from "./document"
 
 enum UserRole {
     User = "User",
@@ -11,29 +11,28 @@ enum UserRelationship {
     Married = "Married",
 }
 
-const UserDocument = "User";
 const UserSchema = new Schema({
-    email        : { type: String, required: true, unique: true },
-    password     : { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
 
-    fullname     : { type: String },
-    role         : { type: String, enum: UserRole, required: true },
+    fullname: { type: String },
+    role: { type: String, enum: UserRole, required: true },
 
-    address      : { type: String },
-    relationship : { type: String, enum: UserRelationship },
-    phone_number : { type: String },
-    hometown     : { type: String },
-    avatar       : { type: String },
-    birthdate    : { type: Number }, // Unix time in seconds
+    address: { type: String },
+    relationship: { type: String, enum: UserRelationship },
+    phone_number: { type: String },
+    hometown: { type: String },
+    avatar: { type: String },
+    birthdate: { type: Number }, // Unix time in seconds
 
-    friends      : [{ type: Schema.Types.ObjectId, ref: UserDocument }],
-    groups       : [{ type: Schema.Types.ObjectId, ref: GroupDocument }],
-    blocks       : [{ type: Schema.Types.ObjectId, ref: UserDocument }],
+    friends: [{ type: Schema.Types.ObjectId, ref: UserDocument }],
+    groups: [{ type: Schema.Types.ObjectId, ref: GroupDocument }],
+    blocks: [{ type: Schema.Types.ObjectId, ref: UserDocument }],
 
-    is_banned    : { type: Boolean, default: false },
-    warnings     : { type: Number, default: 0 },
+    is_banned: { type: Boolean, default: false },
+    warnings: { type: Number, default: 0 },
 }, { _id: true, timestamps: true });
 
 const UserModel = model(UserDocument, UserSchema);
 
-export {UserDocument, UserModel, UserRole, UserRelationship}
+export { UserDocument, UserModel, UserRole, UserRelationship }
