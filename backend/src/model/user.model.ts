@@ -23,7 +23,7 @@ const UserSchema = new Schema({
     phone_number: { type: String },
     hometown: { type: String },
     avatar: { type: String },
-    birthdate: { type: Number }, // Unix time in seconds
+    birthdate: { type: Number }, // Unix time in miliseconds
 
     friends: [{ type: Schema.Types.ObjectId, ref: UserDocument }],
     groups: [{ type: Schema.Types.ObjectId, ref: GroupDocument }],

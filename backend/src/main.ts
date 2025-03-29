@@ -6,6 +6,7 @@ import { connect } from "mongoose";
 import { AppError } from "./app_response";
 import { AuthRouter } from "./route/auth.route";
 import { PostRouter } from "./route/post.route";
+import { UserRouter } from "./route/user.route";
 
 if (process.env.MONGO_DB_URI === undefined) {
     console.log("Error: Missing MONGO_DB_URI in .env")
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/auth", AuthRouter);
 app.use(AuthGuard);
+app.use("/user", UserRouter);
 app.use("/post", PostRouter);
 app.use((req: Request, res: Response, next: NextFunction) => {
     next(new AppError(404, "Not found"));
