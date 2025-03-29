@@ -18,16 +18,17 @@ interface IGroup {
     members: Array<Types.ObjectId>, // reference User
 }
 
+console.log(UserDocument);
 const Group_schema = new Schema<IGroup>({
     name: { type: String, required: true },
     description: { type: String, required: true },
-    visibility: { type: String, enum: Visibility, default: "Public" },
+    visibility: { type: String, enum: Visibility, default: Visibility.Public },
 
-    admin: { type: Schema.Types.ObjectId, ref: UserDocument, required: true },
+    admin: { type: Schema.Types.ObjectId, ref: "User", required: true },
 
     members: [{ type: Schema.Types.ObjectId, ref: UserDocument }],
 }, { _id: true, timestamps: true });
 
-const GroupModel = model<IGroup>("Group", Group_schema);
+const GroupModel = model<IGroup>(GroupDocument, Group_schema);
 
 export { GroupModel, GroupDocument, Visibility };

@@ -21,6 +21,14 @@ const app: Express = express();
 
 
 
+app.use((req: Request, res: Response, next: NextFunction) => { // cors
+    // res.appendHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+    res.appendHeader("Access-Control-Allow-Origin", "*");
+    res.appendHeader("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS");
+    res.appendHeader("Access-Control-Allow-Headers", "*");
+    res.appendHeader("Access-Control-Allow-Credentials", "true");
+    next();
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/auth", AuthRouter);
